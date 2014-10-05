@@ -30,6 +30,31 @@ Alternatively:
 
     MimeTypes.blank().load(Paths.get("/path/to/custom/mime.types"));
 
+# Download
+
+Download the prebuilt JAR from [bintray](http://dl.bintray.com/amr/maven/com/github/amr/mimetypes/0.0.1/mimetypes-0.0.1.jar)
+
+Using with Maven:
+
+    <repositories>
+      <repository>
+        <snapshots>
+          <enabled>false</enabled>
+        </snapshots>
+        <id>central</id>
+        <name>bintray</name>
+        <url>http://dl.bintray.com/amr/maven</url>
+      </repository>
+    </repositories>
+
+    <dependencies>
+      <dependency>
+        <groupId>com.github.amr</groupId>
+        <artifactId>mimetypes</artifactId>
+        <version>0.0.1</version>
+      </dependency>
+    </dependencies>
+
 # Included mime types
 
 `MimeTypes.getInstance()` or the empty constructor `new MimeTypes()` will load
