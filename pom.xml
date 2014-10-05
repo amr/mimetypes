@@ -4,7 +4,7 @@
 
 	<groupId>com.github.mimetypes</groupId>
 	<artifactId>mimetypes</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
 	<name>mimetypes</name>
@@ -26,4 +26,12 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>bintray-amr-maven-mimetypes</id>
+			<name>amr-maven-mimetypes</name>
+			<url>https://api.bintray.com/maven/amr/maven/mimetypes</url>
+		</repository>
+	</distributionManagement>
 </project>
