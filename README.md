@@ -62,6 +62,10 @@ the included `mime.types` definitions, which is downloaded from:
 
     http://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
 
+# JVM
+
+JVM 7 or later is required.
+
 # License
 
 * [MIT License](http://www.opensource.org/licenses/mit-license.php)
