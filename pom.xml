@@ -1,53 +1,53 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.amr</groupId>
-	<artifactId>mimetypes</artifactId>
-	<version>0.0.1</version>
-	<packaging>jar</packaging>
+  <groupId>com.github.amr</groupId>
+  <artifactId>mimetypes</artifactId>
+  <version>0.0.1</version>
+  <packaging>jar</packaging>
 
-	<name>mimetypes</name>
-	<url>http://github.com/amr/mimetypes</url>
+  <name>mimetypes</name>
+  <url>http://github.com/amr/mimetypes</url>
 
-	<properties>
-		<maven.compiler.source>1.7</maven.compiler.source>
-		<maven.compiler.target>1.7</maven.compiler.target>
-		<encoding>UTF-8</encoding>
+  <properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <encoding>UTF-8</encoding>
 
-		<junit.version>4.11</junit.version>
-	</properties>
+    <junit.version>4.11</junit.version>
+  </properties>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
-	<distributionManagement>
-		<repository>
-			<id>bintray-amr-maven-mimetypes</id>
-			<name>amr-maven-mimetypes</name>
-			<url>https://api.bintray.com/maven/amr/maven/mimetypes</url>
-		</repository>
-	</distributionManagement>
+  <distributionManagement>
+    <repository>
+      <id>bintray-amr-maven-mimetypes</id>
+      <name>amr-maven-mimetypes</name>
+      <url>https://api.bintray.com/maven/amr/maven/mimetypes</url>
+    </repository>
+  </distributionManagement>
 </project>
