@@ -36,8 +36,7 @@ public class MimeTypesTest {
 
   @Test
   public void testCustomDefinitionsFile() {
-    MimeTypes mimeTypes = MimeTypes.getInstance();
-    mimeTypes.load(getResource("custom-mime-types"));
+    MimeTypes mimeTypes = MimeTypes.blank().load(getResource("custom-mime-types"));
 
     // By Type
     MimeType type = mimeTypes.getByType("application/vnd.custom.foo");
@@ -69,7 +68,7 @@ public class MimeTypesTest {
   @Test
   public void testCustomDefinitionsRegister() {
     MimeTypes mimeTypes = MimeTypes.getInstance();
-    mimeTypes.register(new MimeType("application/vnd.custom.orbit", new String[]{"orb"}));
+    mimeTypes.register(new MimeType("application/vnd.custom.orbit", "orb"));
 
     // By Type
     MimeType type = mimeTypes.getByType("application/vnd.custom.orbit");
@@ -92,19 +91,31 @@ public class MimeTypesTest {
   }
 
   @Test
+  public void testModel() {
+    MimeType t1 = new MimeType("image/jpeg", "jpg", "jpeg");
+    assertEquals(t1.getExtension(), "jpg");
+
+    MimeType t2 = new MimeType("application/vnd.foo+json");
+    assertNull(t2.getExtension());
+  }
+
+  @Test
   public void testIdentity() {
-    MimeType json1 = new MimeType("application/json", new String[]{"json"});
-    MimeType json2 = new MimeType("application/json", new String[]{"json"});
+    assertNotEquals(new MimeType("text/plain"), null);
+    assertNotEquals(new MimeType("text/plain", "txt"), new Object());
+
+    MimeType json1 = new MimeType("application/json", "json");
+    MimeType json2 = new MimeType("application/json", "json");
     assertEquals(json1, json2);
     assertEquals(json1.hashCode(), json2.hashCode());
 
     // Same ext, different mime type
-    MimeType githubJson = new MimeType("application/vnd.github+json", new String[]{"json"});
+    MimeType githubJson = new MimeType("application/vnd.github+json", "json");
     assertNotEquals(githubJson, json1);
     assertNotEquals(githubJson.hashCode(), json1.hashCode());
 
     // Same mime type, different ext
-    MimeType jsonMl = new MimeType("application/json", new String[]{"jsonml"});
+    MimeType jsonMl = new MimeType("application/json", "jsonml");
     assertNotEquals(jsonMl, json1);
     assertNotEquals(jsonMl.hashCode(), json1.hashCode());
   }
@@ -113,5 +124,10 @@ public class MimeTypesTest {
   public void testNonExisting() {
     assertNull(MimeTypes.getInstance().getByType("application/vnd.imaginary"));
     assertNull(MimeTypes.getInstance().getByExtension("none"));
+  }
+
+  @Test(expected = RuntimeException.class)
+  public void testInvalidFile() {
+    MimeTypes.blank().load(Paths.get("non-existing-file"));
   }
 }

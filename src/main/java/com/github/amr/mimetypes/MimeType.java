@@ -1,17 +1,10 @@
 package com.github.amr.mimetypes;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public class MimeType {
-  public MimeType() {
-  }
-
-  public MimeType(String mimeType) {
-    this.mimeType = mimeType;
-    this.extensions = new String[0];
-  }
-
-  public MimeType(String mimeType, String[] extensions) {
+  public MimeType(String mimeType, String... extensions) {
     this.mimeType = mimeType;
     this.extensions = extensions;
   }
@@ -41,20 +34,12 @@ public class MimeType {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (!(o instanceof MimeType)) {
       return false;
     }
-
     MimeType mimeType1 = (MimeType) o;
-
-    if (!Arrays.equals(extensions, mimeType1.extensions)) {
-      return false;
-    }
-    if (!mimeType.equals(mimeType1.mimeType)) {
-      return false;
-    }
-
-    return true;
+    return Objects.equals(mimeType, mimeType1.mimeType) &&
+      Arrays.equals(extensions, mimeType1.extensions);
   }
 
   @Override

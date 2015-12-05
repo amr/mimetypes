@@ -29,7 +29,7 @@ public class MimeTypes {
   private final Map<String, MimeType> extensions = new HashMap<>();
 
   private static MimeTypes singleton = null;
-  private final static Object singletoneMonitor = new Object();
+  private final static Object singletonMonitor = new Object();
 
   public MimeTypes() {
     this(getDefaultMimeTypesDefinition());
@@ -93,7 +93,7 @@ public class MimeTypes {
    */
   public static MimeTypes getInstance() {
     if (singleton == null) {
-      synchronized (singletoneMonitor) {
+      synchronized (singletonMonitor) {
         if (singleton == null) {
           singleton = new MimeTypes();
         }
@@ -108,11 +108,12 @@ public class MimeTypes {
    *
    * @param def Path of mime type definitions file to load and register
    */
-  public void load(Path def) {
+  public MimeTypes load(Path def) {
     try {
       for (String line : Files.readAllLines(def, StandardCharsets.US_ASCII)) {
         loadOne(line);
       }
+      return this;
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
@@ -125,15 +126,15 @@ public class MimeTypes {
    *
    * @param def Single mime type definition to load and register
    */
-  public void loadOne(String def) {
+  public MimeTypes loadOne(String def) {
     if (def.startsWith(COMMENT_PREFIX)) {
-      return;
+      return this;
     }
 
-    String[] halfs = def.toLowerCase().split("\\s", 2);
+    String[] halves = def.toLowerCase().split("\\s", 2);
 
-    MimeType mimeType = new MimeType(halfs[0], halfs[1].trim().split("\\s"));
-    register(mimeType);
+    MimeType mimeType = new MimeType(halves[0], halves[1].trim().split("\\s"));
+    return register(mimeType);
   }
 
   /**
@@ -142,11 +143,12 @@ public class MimeTypes {
    *
    * @param mimeType MimeType instance to register
    */
-  public void register(MimeType mimeType) {
+  public MimeTypes register(MimeType mimeType) {
     mimeTypes.put(mimeType.getMimeType(), mimeType);
     for (String ext : mimeType.getExtensions()) {
       extensions.put(ext, mimeType);
     }
+    return this;
   }
 
   /**
