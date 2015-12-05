@@ -5,7 +5,4 @@ jdk:
 before_install:
   - pip install --user codecov
 after_success:
-  # Coveralls
-  - mvn clean test jacoco:report coveralls:report
-  # Codecov
   - codecov

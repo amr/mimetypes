@@ -1,5 +1,8 @@
 # MimeTypes
 
+[![Build Status](https://travis-ci.org/amr/mimetypes.svg?branch=master)](https://travis-ci.org/amr/mimetypes)
+[![Test Coverage](https://codecov.io/github/amr/mimetypes/coverage.svg?branch=master)](https://codecov.io/github/amr/mimetypes?branch=master)
+
 Java (JVM) lookup table for standard mime types and their extensions.
 
 # API Usage
