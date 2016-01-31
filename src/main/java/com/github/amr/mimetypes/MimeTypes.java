@@ -15,8 +15,8 @@ import java.util.Map;
 /**
  * A utility registry of mime types, with lookups by mime type and by file
  * extensions.
- * <p/>
- * The constructors, factory methods and load methods are not thread safe,
+ *
+ * <p>The constructors, factory methods and load methods are not thread safe,
  * the exception to this is the {@link #getInstance()} method. BLookup methods
  * ({@link #getByType(String)} and {@link #getByExtension(String)}) are
  * thread-safe. Therefore, once initialized, instances may be used concurrently
@@ -86,8 +86,8 @@ public class MimeTypes {
   /**
    * Get the default instance which is initialized with the built-in mime
    * types definitions on the first access to this method.
-   * <p/>
-   * This is thread-safe.
+   *
+   * <p>This is thread-safe.
    *
    * @return default singleton instance with built-in mime types definitions
    */
@@ -107,6 +107,7 @@ public class MimeTypes {
    * Parse and register mime type definitions from given path.
    *
    * @param def Path of mime type definitions file to load and register
+   * @return This instance of Mimetypes
    */
   public MimeTypes load(Path def) {
     try {
@@ -125,6 +126,7 @@ public class MimeTypes {
    * valid extensions for that mime type.
    *
    * @param def Single mime type definition to load and register
+   * @return This instance of Mimetypes
    */
   public MimeTypes loadOne(String def) {
     if (def.startsWith(COMMENT_PREFIX)) {
@@ -142,6 +144,7 @@ public class MimeTypes {
    * type and/or extension.
    *
    * @param mimeType MimeType instance to register
+   * @return This instance of Mimetypes
    */
   public MimeTypes register(MimeType mimeType) {
     mimeTypes.put(mimeType.getMimeType(), mimeType);

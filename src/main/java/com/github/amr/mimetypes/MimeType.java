@@ -3,6 +3,10 @@ package com.github.amr.mimetypes;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * Represents a mimetype with its possible extension. If multiple
+ * extensions are provided, the first is the default.
+ */
 public class MimeType {
   public MimeType(String mimeType, String... extensions) {
     this.mimeType = mimeType;
