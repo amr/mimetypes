@@ -22,8 +22,8 @@ Get mime type for an extension:
 
 Register a custom mimetype and query it up later:
 
-    MimeTypes.getInstance().register(new MimeType("application/vnd.awes", new String[]{"ome"}));
-    MimeTypes.getInstance().getByType("application/vnd.awesome").getExtension(); // returns "ome"
+    MimeTypes.getInstance().register(new MimeType("application/vnd.awesome", new String[]{"wsm"}));
+    MimeTypes.getInstance().getByType("application/vnd.awesome").getExtension(); // returns "wsm"
 
 Initialize with a custom "mime.types" definitions file:
 

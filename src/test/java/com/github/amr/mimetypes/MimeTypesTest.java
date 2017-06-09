@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
 public class MimeTypesTest {
   public static Path getResource(String path) {
     try {
-      return Paths.get(MimeTypesTest.class.getResource(path).toURI());
+      return Paths.get(MimeTypesTest.class.getClassLoader().getResource(path).toURI());
     } catch (URISyntaxException e) {
       throw new IllegalArgumentException(e);
     }

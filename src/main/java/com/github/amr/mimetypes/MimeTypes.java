@@ -1,14 +1,12 @@
 package com.github.amr.mimetypes;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,34 +30,23 @@ public class MimeTypes {
   private final static Object singletonMonitor = new Object();
 
   public MimeTypes() {
-    this(getDefaultMimeTypesDefinition());
+    load(getDefaultMimeTypesDefinition());
   }
 
   /**
-   * Get path to the default included mime types definition file.
+   * Get an input stream to the default included mime types definition file.
    *
    * @return Standard path to the included mime types definitions
    */
-  public static Path getDefaultMimeTypesDefinition() {
-    URL defaultDefinition = ClassLoader.getSystemClassLoader().getResource("mime.types");
+  public static InputStream getDefaultMimeTypesDefinition() {
+    InputStream defaultDefinition =
+      MimeTypes.class.getClassLoader().getResourceAsStream("mime.types");
+
     if (defaultDefinition == null) {
       throw new IllegalStateException("Could not find the built-in mime.types definition file");
     }
 
-    try {
-      if (defaultDefinition.getProtocol().startsWith("jar")) {
-        URI uri = defaultDefinition.toURI();
-
-        Map<String, String> env = new HashMap<>(1);
-        env.put("create", "true");
-
-        FileSystems.newFileSystem(uri, env);
-      }
-      return Paths.get(defaultDefinition.toURI());
-    } catch (URISyntaxException | IOException e) {
-      throw new RuntimeException(
-        "Error occurred while initializing from the default mime types definitions, this is a bug", e);
-    }
+    return defaultDefinition;
   }
 
   /**
@@ -121,6 +108,27 @@ public class MimeTypes {
   }
 
   /**
+   * Parse and register mime type definitions from given input stream.
+   *
+   * @param inputStream Input stream of mime type definitions file to load and register
+   * @return This instance of Mimetypes
+   */
+  public MimeTypes load(InputStream inputStream) {
+    try (InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+         BufferedReader reader = new BufferedReader(inputStreamReader)) {
+
+      String line;
+      while ((line = reader.readLine()) != null) {
+        loadOne(line);
+      }
+
+      return this;
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  /**
    * Load and register a single line that starts with the mime type proceeded
    * by any number of whitespaces, then a whitespace separated list of
    * valid extensions for that mime type.
@@ -129,14 +137,20 @@ public class MimeTypes {
    * @return This instance of Mimetypes
    */
   public MimeTypes loadOne(String def) {
-    if (def.startsWith(COMMENT_PREFIX)) {
+    if (def.trim().isEmpty() || def.startsWith(COMMENT_PREFIX)) {
       return this;
     }
 
     String[] halves = def.toLowerCase().split("\\s", 2);
 
-    MimeType mimeType = new MimeType(halves[0], halves[1].trim().split("\\s"));
-    return register(mimeType);
+    if (halves.length >= 2) {
+      register(new MimeType(halves[0], halves[1].trim().split("\\s")));
+    }
+    else if (halves.length == 1) {
+      register(new MimeType(halves[0]));
+    }
+
+    return this;
   }
 
   /**
