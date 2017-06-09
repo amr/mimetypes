@@ -45,13 +45,13 @@ If you want the sources and javadocs too:
 
 # Maven central coordinates
 
-Starting from `0.0.2`, new releases are submitted to central, to use:
+New releases are submitted to central, to use:
 
     <dependencies>
       <dependency>
         <groupId>com.github.amr</groupId>
         <artifactId>mimetypes</artifactId>
-        <version>0.0.2</version>
+        <version>0.0.3</version>
       </dependency>
     </dependencies>
 
